@@ -100,7 +100,7 @@ export default function SignupPage() {
             buttonDisabled ? `opacity-50 cursor-not-allowed` : "cursor-pointer"
           } px-8 py-1 bg-white text-gray-700 rounded-lg `}
         >
-          {loading ? "Signing Up" : "Signup"}
+          {loading ? "Loading..." : "Signup"}
         </button>
         <Link href={"/login"}>Visit login Page</Link>
       </form>

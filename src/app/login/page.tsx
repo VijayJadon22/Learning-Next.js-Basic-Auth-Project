@@ -29,7 +29,7 @@ export default function LoginPage() {
     try {
       const response = await axios.post("/api/users/login", formData);
       console.log("login sucess, response: ", response.data);
-      router.push("/");
+      router.push("/profile");
     } catch (error: any) {
       console.log("Error logingin user: ", error);
       toast.error(error.response.data.message);
@@ -75,8 +75,11 @@ export default function LoginPage() {
         />
         <button
           disabled={buttonDisabled}
-          className="px-8 py-1 bg-white text-gray-700 rounded-lg cursor-pointer">
-          {loading ? "Loging in" : "Login"}
+          className={`${
+            buttonDisabled ? `opacity-50 cursor-not-allowed` : "cursor-pointer"
+          } px-8 py-1 bg-white text-gray-700 rounded-lg `}
+        >
+          {loading ? "Loading..." : "Login"}
         </button>
         <Link href={"/signup"}>Visit signup Page</Link>
       </form>
