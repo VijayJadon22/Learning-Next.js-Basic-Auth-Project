@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -13,6 +13,15 @@ export default function LoginPage() {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
+  useEffect(() => {
+    if (formData.email.length > 0 && formData.password.length > 0) {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
+    }
+  }, [formData]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,7 +30,7 @@ export default function LoginPage() {
       const response = await axios.post("/api/users/login", formData);
       console.log("login sucess, response: ", response.data);
       router.push("/");
-    } catch (error:any) {
+    } catch (error: any) {
       console.log("Error logingin user: ", error);
       toast.error(error.response.data.message);
     } finally {
@@ -64,7 +73,9 @@ export default function LoginPage() {
           value={formData.password}
           placeholder="Password"
         />
-        <button className="px-8 py-1 bg-white text-gray-700 rounded-lg cursor-pointer">
+        <button
+          disabled={buttonDisabled}
+          className="px-8 py-1 bg-white text-gray-700 rounded-lg cursor-pointer">
           {loading ? "Loging in" : "Login"}
         </button>
         <Link href={"/signup"}>Visit signup Page</Link>
